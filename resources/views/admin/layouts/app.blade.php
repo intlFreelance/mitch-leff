@@ -8,16 +8,24 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel Multi Auth Guard') }}</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
         ]); ?>
+    </script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script
+	    src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+        crossorigin="anonymous">
     </script>
 </head>
 <body>
@@ -35,7 +43,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/admin/home') }}">
-                    {{ config('app.name', 'Laravel Multi Auth Guard') }}: Admin
+                    {{ config('app.name', 'Laravel') }}: Admin
                 </a>
             </div>
 
@@ -54,7 +62,16 @@
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::guard('admin')->user()->name }} <span class="caret"></span>
+                                 <i class="fa fa-key" aria-hidden="true"></i> Access <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url('/admin/users') }}"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Users</a></li>
+                                <li><a href="{{ url('/admin/admins') }}"><i class="fa fa-user-circle" aria-hidden="true"></i> Administrators</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <i class="fa fa-user" aria-hidden="true"></i> {{ Auth::guard('admin')->user()->name }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
@@ -62,7 +79,7 @@
                                     <a href="{{ url('/admin/logout') }}"
                                         onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
-                                        Logout
+                                        <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
                                     </a>
 
                                     <form id="logout-form" action="{{ url('/admin/logout') }}" method="POST" style="display: none;">
@@ -76,10 +93,17 @@
             </div>
         </div>
     </nav>
-
+    <div class="container">
+        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+          @if(Session::has($msg))
+            <p class="alert alert-{{ $msg }}">{{ Session::get($msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+          @endif
+        @endforeach
+  </div>
     @yield('content')
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+    
 </body>
 </html>
