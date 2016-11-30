@@ -50,9 +50,16 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255',
-            'password'=>'min:6|confirmed'
+            'firstName' => 'required|max:255',
+            'lastName' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'phoneNumber' => 'required|max:255',
+            'businessName' => 'required|max:255',
+            'address.line1' => 'required',
+            'address.city' => 'required',
+            'address.state' => 'required',
+            'address.zip' => 'required',
+            'password'=>'required|min:6|confirmed'
         ]);
         
         $input = $request->all();
@@ -98,13 +105,22 @@ class UserController extends Controller
     {
         $user = $this->loadModel($id);
         $this->validate($request, [
-            'name' => 'required|max:255',
+            'firstName' => 'required|max:255',
+            'lastName' => 'required|max:255',
             'email' => 'required|email|max:255',
+            'phoneNumber' => 'required|max:255',
+            'businessName' => 'required|max:255',
+            'address.line1' => 'required',
+            'address.city' => 'required',
+            'address.state' => 'required',
+            'address.zip' => 'required',
             'password'=>'min:6|confirmed'
         ]);
          
         $input = $request->all();
-        if(!empty($input["password"])){
+        if(empty($input["password"])){
+            unset($input["password"]);
+        }else{
             $input["password"] = bcrypt($input["password"]);
         }
 
