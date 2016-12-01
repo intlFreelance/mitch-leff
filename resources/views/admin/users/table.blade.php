@@ -1,7 +1,10 @@
 <table class="table table-responsive table-striped" id="categories-table">
     <thead>
         <th>ID</th>
-        <th>Name</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Business Name</th>
+        <th>Phone Number</th>
         <th>Email</th>
         <th colspan="3" class="text-right">Action</th>
     </thead>
@@ -9,7 +12,10 @@
     @foreach($users as $user)
         <tr>
             <td>{!! $user->id !!}</td>
-            <td>{!! $user->name !!}</td>
+            <td>{!! $user->firstName !!}</td>
+            <td>{!! $user->lastName !!}</td>
+            <td>{!! $user->businessName !!}</td>
+            <td>{!! $user->phoneNumber !!}</td>
             <td><a href="mailto:{!! $user->email !!}">{!! $user->email !!}</a></td>
             <td class="text-right">
                 {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'delete']) !!}

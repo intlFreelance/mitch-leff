@@ -14,9 +14,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    protected $fillable = ['id','firstName','lastName', 'email', 'phoneNumber', 'businessName', 'password', 'address'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -26,4 +24,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+     
+    protected $casts = [
+        'address' => 'array',
+    ];
+    
+    public function fullName(){
+        return "{$this->firstName} {$this->lastName}";
+    }
 }
