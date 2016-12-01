@@ -2,16 +2,14 @@
 
 @section('content')
 <div class="container">
+    <h1 class="pull-left">Administrators</h1>
+    <a class="btn btn-primary pull-right" style="margin-top: 25px" href="{!! route('admins.create') !!}">Add New</a>
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
-
                 <div class="panel-body">
-                    You are logged in as Admin!
+                    @include('admin.admins.table')
                 </div>
             </div>
-        </div>
     </div>
 </div>
 @endsection

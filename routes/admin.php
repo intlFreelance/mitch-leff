@@ -14,6 +14,8 @@ Route::group(['prefix' => 'admin'], function () {
   Route::get('/password/reset/{token}', 'AdminAuth\ResetPasswordController@showResetForm');
   
   Route::get('/home','Admin\HomeController@index')->name('home');
+  Route::resource('users', 'Admin\UserController');
+  Route::resource('admins', 'Admin\AdminController');
 });
 
 
